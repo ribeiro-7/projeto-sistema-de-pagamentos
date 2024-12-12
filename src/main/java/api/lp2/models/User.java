@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class User {
 
-    public static final String TABLE_NAME = "user";
+    public static final String TABLE_NAME = "users";
 
     public interface createUser{}
 
