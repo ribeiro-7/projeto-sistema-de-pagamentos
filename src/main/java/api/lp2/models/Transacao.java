@@ -71,7 +71,7 @@ public class Transacao {
     @NotNull
     @NotEmpty
     @Column(name = "metodo_de_pagamento", nullable = false)
-    private String metodo_de_pagamento;
+    private String metodoDePagamento;
 
 
 

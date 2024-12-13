@@ -19,7 +19,7 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long>{
 
     List<Transacao> findByData(LocalDateTime data);
 
-    List<Transacao> findByMetodo_de_pagamento(String metodo_de_pagamento);
+    List<Transacao> findByMetodoDePagamento(String metodoDePagamento);
 
 
 
