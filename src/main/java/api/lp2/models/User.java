@@ -36,7 +36,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //"Auto-increment"
     @Column(name = "id", unique=true) 
-    private long id;
+    private Long id;
 
 
     @Column(name = "username", length = 50, nullable = false, unique = true)

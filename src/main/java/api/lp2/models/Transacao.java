@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import api.lp2.enums.StatusTransacao;
+
 
 
 //Tabela de transação
@@ -38,7 +40,7 @@ public class Transacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
 
     @ManyToOne
@@ -57,7 +59,8 @@ public class Transacao {
     @Enumerated(EnumType.STRING)
     @NotNull
     @NotEmpty
-    private StatusPagamento status;
+    private StatusTransacao status;
+
 
     @NotNull
     @NotEmpty
