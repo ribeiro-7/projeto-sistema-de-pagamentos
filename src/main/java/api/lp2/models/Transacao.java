@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import api.lp2.enums.StatusTransacao;
+import api.lp2.models.enums.StatusTransacao;
 
 
 

@@ -3,6 +3,7 @@ package api.lp2.models;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +33,7 @@ public class User {
 
     public interface createUser{}
 
+    public interface updateUser{}
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //"Auto-increment"

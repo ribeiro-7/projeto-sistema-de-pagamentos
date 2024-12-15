@@ -1,4 +1,4 @@
-package api.lp2.enums;
+package api.lp2.models.enums;
 
 public enum StatusTransacao {
     PENDENTE,
