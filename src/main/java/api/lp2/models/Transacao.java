@@ -49,6 +49,10 @@ public class Transacao {
     private User user;
 
 
+    @ManyToOne
+    @JoinColumn(name = "carteira_id", nullable = false)
+    private Carteira carteira;
+
     @Positive
     @NotNull
     @NotEmpty

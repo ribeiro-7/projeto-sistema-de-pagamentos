@@ -41,7 +41,7 @@ public class Carteira {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "carteira") 
+    @OneToMany
     private List<Transacao> transacoes = new ArrayList<Transacao>();
 
     @Column(name = "saldo", nullable = false)
