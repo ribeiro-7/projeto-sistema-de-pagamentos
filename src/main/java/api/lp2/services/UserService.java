@@ -18,8 +18,14 @@ public class UserService {
     
     public User findById(Long id){
         Optional<User> user = this.userRepository.findById(id);
-        return user.orElseThrow(() -> new RuntimeException("Usuário não existe!"));
+        return user.orElseThrow(() -> new RuntimeException("Usuário não existe! ID inválido."));
     }
+
+
+    public boolean existsByid(Long id){
+        return userRepository.existsById(id);
+    }
+
 
     @Transactional
     public User create(User obj){

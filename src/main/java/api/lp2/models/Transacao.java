@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -52,7 +53,7 @@ public class Transacao {
     @NotNull
     @NotEmpty
     @Column(name = "valor", nullable = false)
-    private double valor;
+    private BigDecimal valor;
 
 
     @Column(name = "status", nullable = false)
