@@ -15,55 +15,58 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import api.lp2.models.User;
-import api.lp2.models.User.createUser;
-import api.lp2.models.User.updateUser;
-import api.lp2.services.UserService;
+import api.lp2.models.Carteira;
+import api.lp2.services.CarteiraService;
 import jakarta.validation.Valid;
 
 
-//faz a criação de um usuário com o username e senha, atualiza a senha e deleta usuário do sistema
+//Vai retornar o saldo do usuário
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/carteira")
 @Validated
-public class UserController {
+public class CarteiraController {
     
-
     @Autowired
-    private UserService userService;
+    private CarteiraService carteiraService;
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id){
-        
-        User user = this.userService.findById(id);
-        return ResponseEntity.ok().body(user);
+    public ResponseEntity<Carteira> findById(@PathVariable Long id){
+
+        Carteira carteira = this.carteiraService.findById(id);
+        return ResponseEntity.ok().body(carteira);
 
     }
 
-
+    
     @PostMapping
-    @Validated(createUser.class)
-    public ResponseEntity<Void> create(@Valid @RequestBody User obj){
-        this.userService.create(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+    @Validated
+    public ResponseEntity<Void> createCarteira(@Valid @RequestBody Carteira carteira){
+
+        this.carteiraService.create(carteira);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(carteira.getId()).toUri();
         return ResponseEntity.created(uri).build();
+        
     }
 
 
     @PutMapping("/{id}")
-    @Validated(updateUser.class)
-    public ResponseEntity<Void> update(@Valid @RequestBody User obj, @PathVariable Long id){
-        obj.setId(id);
-        obj = this.userService.update(obj);
+    @Validated
+    public ResponseEntity<Void> updateCarteira(@Valid @RequestBody Carteira carteira, @PathVariable Long id){
+
+        carteira.setId(id);
+        this.carteiraService.update(carteira);
         return ResponseEntity.noContent().build();
+
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
-        this.userService.delete(id);
+    public ResponseEntity<Void> deleteCarteira(@PathVariable Long id){
+
+        this.carteiraService.delete(id);
         return ResponseEntity.noContent().build();
-    }   
+    }
+
 
 }

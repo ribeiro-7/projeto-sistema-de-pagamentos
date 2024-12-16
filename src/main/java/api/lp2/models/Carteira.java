@@ -14,7 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 
@@ -43,7 +42,6 @@ public class Carteira {
 
     @Column(name = "saldo", nullable = false)
     @NotNull
-    @NotEmpty
     private BigDecimal saldo = BigDecimal.ZERO;
 
 

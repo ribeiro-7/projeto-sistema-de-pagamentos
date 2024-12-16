@@ -23,7 +23,11 @@ public class UserService {
 
 
     public boolean existsByid(Long id){
+        try{
         return userRepository.existsById(id);
+        }catch(Exception e){
+            throw new RuntimeException("ID inexistente.");
+        }
     }
 
 
@@ -37,9 +41,13 @@ public class UserService {
     
     @Transactional
     public User update(User obj){
+        try{
         User newObj = findById(obj.getId());
         newObj.setPassword(obj.getPassword());
         return this.userRepository.save(newObj);
+        }catch(Exception e){
+            throw new RuntimeException("Não foi possível atualizar a senha do usuário, pois o ID é inválido.");
+        }
     }
 
 

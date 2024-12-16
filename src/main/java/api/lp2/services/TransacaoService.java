@@ -55,17 +55,20 @@ public class TransacaoService {
     }
 
     public Transacao processarTransacao(Long id, boolean concluido){
+        try{
+            Transacao transacao = findById(id);
 
-        Transacao transacao = findById(id);
+            if(concluido){
+                transacao.setStatus(StatusTransacao.APROVADO);
+            }
+            else{
+                transacao.setStatus(StatusTransacao.REJEITADO);
+            }
 
-        if(concluido){
-            transacao.setStatus(StatusTransacao.APROVADO);
+            return transacaoRepository.save(transacao);
+        }catch(Exception e){
+            throw new RuntimeException("Transação de ID " + id + " não encontrada!");
         }
-        else{
-            transacao.setStatus(StatusTransacao.REJEITADO);
-        }
-
-        return transacaoRepository.save(transacao);
 
     }
 
