@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import api.lp2.models.Carteira;
 import api.lp2.models.Transacao;
 import api.lp2.models.enums.StatusTransacao;
 import api.lp2.repositories.TransacaoRepository;
@@ -18,7 +19,7 @@ public class TransacaoService {
     private TransacaoRepository transacaoRepository;
 
     @Autowired
-    private UserService userService;
+    private CarteiraService carteiraService;
 
 
     public Transacao findById(Long id){
@@ -27,23 +28,35 @@ public class TransacaoService {
     }
 
     public Transacao realizarTransacao(Long id, BigDecimal valor, String metodoDePagamento){
-        if (!userService.existsByid(id)) {
+        if (!carteiraService.existsByid(id)) {
             throw new RuntimeException("Usuário não encontrado! ID inválido.");
         }
 
+
+        Carteira carteira = carteiraService.findById(id);
+
+        if (carteira.getSaldo().compareTo(valor) < 0) {
+            throw new RuntimeException("Saldo insuficiente!");
+        }
+        
         Transacao transacao = new Transacao();
-        transacao.setUser(userService.findById(id));
+        transacao.setCarteira(carteira);
         transacao.setValor(valor);
         transacao.setMetodoDePagamento(metodoDePagamento);
         transacao.setStatus(StatusTransacao.PENDENTE);
         transacao.setData(LocalDateTime.now());
 
-        return transacaoRepository.save(transacao);
+        transacaoRepository.save(transacao);
+
+        carteira.setSaldo(carteira.getSaldo().subtract(valor));
+        carteiraService.update(carteira);
+
+        return transacao;
     }
 
     public Transacao processarTransacao(Long id, boolean concluido){
 
-        Transacao transacao = new Transacao();
+        Transacao transacao = findById(id);
 
         if(concluido){
             transacao.setStatus(StatusTransacao.APROVADO);
@@ -69,14 +82,16 @@ public class TransacaoService {
 
 
         Transacao reembolso = new Transacao();
-        reembolso.setUser(transacao.getUser());
+        reembolso.setCarteira(transacao.getCarteira());
         reembolso.setValor(transacao.getValor().negate());
         reembolso.setMetodoDePagamento(transacao.getMetodoDePagamento());
         reembolso.setStatus(StatusTransacao.REEMBOLSADO);
         reembolso.setData(LocalDateTime.now());
 
 
-        transacaoRepository.save(reembolso);
+        transacao.getCarteira().setSaldo(transacao.getCarteira().getSaldo().add(transacao.getValor()));
+
+        carteiraService.update(transacao.getCarteira());
 
         return reembolso;
 

@@ -38,15 +38,16 @@ public class Carteira {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
-
-    @OneToMany
-    private List<Transacao> transacoes = new ArrayList<Transacao>();
 
     @Column(name = "saldo", nullable = false)
     @NotNull
     @NotEmpty
     private BigDecimal saldo = BigDecimal.ZERO;
+
+
+    @OneToMany(mappedBy = "carteira")
+    private List<Transacao> transacoes = new ArrayList<Transacao>();
 
 }

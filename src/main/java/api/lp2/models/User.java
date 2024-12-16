@@ -1,15 +1,12 @@
 package api.lp2.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -54,8 +51,8 @@ public class User {
     @Column(name = "password", length = 12, nullable = false)
     private String password;
     
-    @OneToMany(mappedBy = "user")
-    private List<Transacao> transacoes = new ArrayList<Transacao>();
+    @OneToOne(mappedBy = "user")
+    private Carteira carteira;
 
 
 }
