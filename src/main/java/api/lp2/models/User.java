@@ -45,8 +45,8 @@ public class User {
     private String username;
 
     
-    @NotNull(groups = createUser.class)
-    @NotEmpty(groups = createUser.class)
+    @NotNull(groups = {createUser.class, updateUser.class})
+    @NotEmpty(groups = {createUser.class, updateUser.class})
     @Size(groups = createUser.class, min = 8, max = 12)
     @Column(name = "password", length = 12, nullable = false)
     private String password;
