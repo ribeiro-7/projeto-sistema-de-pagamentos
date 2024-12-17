@@ -1,6 +1,7 @@
 package api.lp2.models;
 
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,8 +34,8 @@ public class User {
     public interface updateUser{}
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //"Auto-increment"
-    @Column(name = "id", unique=true) 
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @Column(name = "id", unique=true)
     private Long id;
 
 

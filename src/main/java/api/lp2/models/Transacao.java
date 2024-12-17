@@ -51,7 +51,6 @@ public class Transacao {
     
     @Positive
     @NotNull
-    @NotEmpty
     @Column(name = "valor", nullable = false)
     private BigDecimal valor;
 
@@ -59,12 +58,10 @@ public class Transacao {
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     @NotNull
-    @NotEmpty
     private StatusTransacao status;
 
 
     @NotNull
-    @NotEmpty
     @Column(name = "data", nullable = false)
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime data;

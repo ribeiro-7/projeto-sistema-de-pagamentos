@@ -20,7 +20,6 @@ import api.lp2.services.CarteiraService;
 import jakarta.validation.Valid;
 
 
-//Vai retornar o saldo do usuário
 @Controller
 @RequestMapping("/carteira")
 @Validated
@@ -41,18 +40,17 @@ public class CarteiraController {
     
     @PostMapping
     @Validated
-    public ResponseEntity<Void> createCarteira(@Valid @RequestBody Carteira carteira){
+    public ResponseEntity<Void> createCarteira(@Valid @RequestBody Carteira obj){
 
-        this.carteiraService.create(carteira);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(carteira.getId()).toUri();
+        this.carteiraService.create(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
-        
+
     }
 
 
     @PutMapping("/{id}")
-    @Validated
-    public ResponseEntity<Void> updateCarteira(@Valid @RequestBody Carteira carteira, @PathVariable Long id){
+    public ResponseEntity<Void> updateCarteira(@RequestBody Carteira carteira, @PathVariable Long id){
 
         carteira.setId(id);
         this.carteiraService.update(carteira);

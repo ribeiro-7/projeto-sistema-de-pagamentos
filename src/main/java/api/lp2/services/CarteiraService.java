@@ -11,6 +11,7 @@ import api.lp2.repositories.CarteiraRepository;
 import jakarta.transaction.Transactional;
 
 
+
 @Service
 public class CarteiraService {
     
@@ -20,6 +21,7 @@ public class CarteiraService {
 
     @Autowired
     private UserService userService;
+
 
 
     public boolean existsByid(Long id){
@@ -37,20 +39,18 @@ public class CarteiraService {
     }
 
     @Transactional
-    public Carteira create(Carteira obj){
-        
-        try{
-            User user = this.userService.findById(obj.getUser().getId());
-            obj.setId(null);
-            obj.setUser(user);
-            obj = this.carteiraRepository.save(obj);
-            return obj;
-        }catch(Exception e){
-            throw new RuntimeException("Não foi possível criar a carteira.");
+    public Carteira create(Carteira obj) {
+        if(obj.getUser() == null){
+            throw new IllegalArgumentException("Erro: O usuário está nulo no serviço.");
         }
+        User user = this.userService.findById(obj.getUser().getId());
+        obj.setId(null);
+        obj.setUser(user);
+        obj = this.carteiraRepository.save(obj);
+        return obj;
 
-        
     }
+
 
 
     @Transactional
@@ -58,8 +58,18 @@ public class CarteiraService {
         if (carteira == null || carteira.getId() == null) {
             throw new RuntimeException("Carteira inválida para atualização.");
         }
+
+        Carteira carteiraExistente = carteiraRepository.findById(carteira.getId())
+                .orElseThrow(() -> new RuntimeException("Carteira não encontrada."));
+
+        if (carteira.getUser() == null) {
+            carteira.setUser(carteiraExistente.getUser());
+        }
+
+        carteira.setId(carteiraExistente.getId());
         return carteiraRepository.save(carteira);
     }
+    
 
     public void delete(Long id) {
         findById(id);
