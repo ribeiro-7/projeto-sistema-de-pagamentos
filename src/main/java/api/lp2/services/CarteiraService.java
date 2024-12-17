@@ -71,14 +71,5 @@ public class CarteiraService {
     }
     
 
-    public void delete(Long id) {
-        findById(id);
-        try {
-            this.carteiraRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Não é possível excluir pois há entidades relacionadas!");
-        }
-    }
-
 
 }
