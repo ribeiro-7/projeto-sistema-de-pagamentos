@@ -45,7 +45,7 @@ public class TransacaoController {
 
         try{
             StatusTransacao status = transacaoService.consultarStatus(id);
-            return ResponseEntity.ok().body("Status da transação: " + status + "ID: " + id);
+            return ResponseEntity.ok().body("Status da transação: " + status + " ID: " + id);
         }catch(Exception e){
             throw new RuntimeException("Não foi possível verificar o status da transação.");
         }
@@ -56,7 +56,7 @@ public class TransacaoController {
     @PostMapping
     public ResponseEntity<Void> createTransacao (@RequestBody TransacaoRequest request) {
         try {
-            Transacao transacao = this.transacaoService.realizarTransacao(request.getUser().getId(), request.getValor(), request.getMetodoDePagamento());
+            Transacao transacao = this.transacaoService.realizarTransacao(request.getCarteira().getId(), request.getValor(), request.getMetodoDePagamento());
     
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(transacao.getId()).toUri();
             return ResponseEntity.created(uri).build();
