@@ -19,6 +19,9 @@ import api.lp2.controllers.Requests.TransacaoRequest;
 import api.lp2.models.Transacao;
 import api.lp2.models.enums.StatusTransacao;
 import api.lp2.services.TransacaoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 
 
@@ -31,6 +34,12 @@ public class TransacaoController {
     private TransacaoService transacaoService;
 
 
+    @Operation(description = "Encontrar usuário da transação por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Usuário de transação encontrado."),
+        @ApiResponse(responseCode = "417", description = "Erro de validação."), 
+        @ApiResponse(responseCode = "500", description = "Erro interno.")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<Transacao> findById(@PathVariable Long id){
 
@@ -39,7 +48,13 @@ public class TransacaoController {
 
     }
 
-    
+
+    @Operation(description = "Consultar status da transação por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Status de transação encontrado."),
+        @ApiResponse(responseCode = "417", description = "Erro de validação."), 
+        @ApiResponse(responseCode = "500", description = "Erro interno.")
+    })
     @GetMapping("/{id}/status")
     public ResponseEntity<String> consultarStatus(@PathVariable Long id){
 
@@ -53,6 +68,12 @@ public class TransacaoController {
     }
 
     
+    @Operation(description = "Realizar transação")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Transação realizada com sucesso."),
+        @ApiResponse(responseCode = "417", description = "Erro de validação."), 
+        @ApiResponse(responseCode = "500", description = "Erro interno.")
+    })
     @PostMapping
     public ResponseEntity<Void> createTransacao (@RequestBody TransacaoRequest request) {
         try {
@@ -67,6 +88,12 @@ public class TransacaoController {
 
 
 
+    @Operation(description = "Validar uma transação")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Transação proecssada."),
+        @ApiResponse(responseCode = "417", description = "Erro de validação."), 
+        @ApiResponse(responseCode = "500", description = "Erro interno.")
+    })
     @PostMapping("/processar")
     public ResponseEntity<Void> updateTransacao(@RequestBody ProcessarTransacaoRequest request){
 
@@ -81,6 +108,12 @@ public class TransacaoController {
     }
 
     
+    @Operation(description = "Realizar reembolso")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Processo de reembolso realizado."),
+        @ApiResponse(responseCode = "417", description = "Erro de validação."), 
+        @ApiResponse(responseCode = "500", description = "Erro interno.")
+    })
     @PostMapping("/reembolso/{id}")
     public ResponseEntity<Void> realizarReembolso(@PathVariable Long id){
 
@@ -94,6 +127,12 @@ public class TransacaoController {
     }
 
 
+    @Operation(description = "Deletar transação")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Transação deletada com sucesso."),
+        @ApiResponse(responseCode = "417", description = "Erro de validação."), 
+        @ApiResponse(responseCode = "500", description = "Erro interno.")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTransacao(@PathVariable Long id){
 

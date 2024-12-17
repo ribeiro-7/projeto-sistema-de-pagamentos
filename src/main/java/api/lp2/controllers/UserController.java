@@ -19,10 +19,12 @@ import api.lp2.models.User;
 import api.lp2.models.User.createUser;
 import api.lp2.models.User.updateUser;
 import api.lp2.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 
-//faz a criação de um usuário com o username e senha, atualiza a senha e deleta usuário do sistema
 @Controller
 @RequestMapping("/user")
 @Validated
@@ -33,6 +35,12 @@ public class UserController {
     private UserService userService;
 
 
+    @Operation(description = "Encontrar usuário por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Usuário encontrado."),
+        @ApiResponse(responseCode = "417", description = "Erro de validação."), 
+        @ApiResponse(responseCode = "500", description = "Erro interno.")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id){
         
@@ -41,7 +49,12 @@ public class UserController {
 
     }
 
-
+    @Operation(description = "Criar um usuário")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Usuário Criado com sucesso."),
+        @ApiResponse(responseCode = "417", description = "Erro de validação."), 
+        @ApiResponse(responseCode = "500", description = "Erro interno.")
+    })
     @PostMapping
     @Validated(createUser.class)
     public ResponseEntity<Void> create(@Valid @RequestBody User obj){
@@ -50,7 +63,12 @@ public class UserController {
         return ResponseEntity.created(uri).build();
     }
 
-
+    @Operation(description = "Atualizar a senha de um usuário")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Usuário atualizado com sucesso."),
+        @ApiResponse(responseCode = "417", description = "Erro de validação."), 
+        @ApiResponse(responseCode = "500", description = "Erro interno.")
+    })
     @PutMapping("/{id}")
     @Validated(updateUser.class)
     public ResponseEntity<Void> update(@Valid @RequestBody User obj, @PathVariable Long id){
@@ -59,7 +77,12 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-
+    @Operation(description = "Deletar um usuário")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Usuário excluído com sucesso."),
+        @ApiResponse(responseCode = "417", description = "Erro de validação."), 
+        @ApiResponse(responseCode = "500", description = "Erro interno.")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         this.userService.delete(id);

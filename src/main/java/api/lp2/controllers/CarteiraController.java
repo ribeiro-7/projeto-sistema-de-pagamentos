@@ -16,6 +16,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import api.lp2.models.Carteira;
 import api.lp2.services.CarteiraService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 
@@ -28,6 +31,12 @@ public class CarteiraController {
     private CarteiraService carteiraService;
 
 
+    @Operation(description = "Encontrar carteira por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Usuário da carteira encontrado."),
+        @ApiResponse(responseCode = "417", description = "Erro de validação."), 
+        @ApiResponse(responseCode = "500", description = "Erro interno.")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<Carteira> findById(@PathVariable Long id){
 
@@ -37,6 +46,12 @@ public class CarteiraController {
     }
 
     
+    @Operation(description = "Criar carteira para usuário")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Carteira criada com sucesso."),
+        @ApiResponse(responseCode = "417", description = "Erro de validação."), 
+        @ApiResponse(responseCode = "500", description = "Erro interno.")
+    })
     @PostMapping
     @Validated
     public ResponseEntity<Void> createCarteira(@Valid @RequestBody Carteira obj){
@@ -48,6 +63,12 @@ public class CarteiraController {
     }
 
 
+    @Operation(description = "Atualizar carteira")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Carteira atualizada com sucesso."),
+        @ApiResponse(responseCode = "417", description = "Erro de validação."), 
+        @ApiResponse(responseCode = "500", description = "Erro interno.")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateCarteira(@RequestBody Carteira carteira, @PathVariable Long id){
 
